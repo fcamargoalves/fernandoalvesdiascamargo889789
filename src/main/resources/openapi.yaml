@@ -1,3 +1,15 @@
 spring:
   application:
     name: musicapi
+
+openapi: 3.0.1
+info:
+  title: Music API
+  version: v1
+paths:
+  /api/v1/albums:
+    post:
+      summary: Cadastrar álbum
+      responses:
+        '201':
+          description: Criado
