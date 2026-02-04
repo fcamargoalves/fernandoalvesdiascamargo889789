@@ -13,3 +13,17 @@ paths:
       responses:
         '201':
           description: Criado
+
+  /api/v1/regionais:
+    get:
+      summary: Listar regionais ativas
+      responses:
+        '200':
+          description: OK
+
+  /api/v1/regionais/sincronizar:
+    post:
+      summary: Sincronizar regionais externas
+      responses:
+        '200':
+          description: Sincronizado
