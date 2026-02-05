@@ -1,0 +1,48 @@
+version: "3.9"
+
+services:
+
+  postgres:
+    image: postgres:15
+    container_name: musicapi-postgres
+    environment:
+      POSTGRES_DB: musicdb
+      POSTGRES_USER: music
+      POSTGRES_PASSWORD: music
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  minio:
+    image: minio/minio
+    container_name: musicapi-minio
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minio
+      MINIO_ROOT_PASSWORD: minio123
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - miniodata:/data
+
+  api:
+    build: .
+    container_name: musicapi-api
+    depends_on:
+      - postgres
+      - minio
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/musicdb
+      SPRING_DATASOURCE_USERNAME: music
+      SPRING_DATASOURCE_PASSWORD: music
+      MINIO_URL: http://minio:9000
+      MINIO_ACCESS_KEY: minio
+      MINIO_SECRET_KEY: minio123
+    ports:
+      - "8080:8080"
+
+volumes:
+  pgdata:
+  miniodata:

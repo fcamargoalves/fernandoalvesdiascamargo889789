@@ -2,23 +2,27 @@ spring:
   application:
     name: musicapi
 
-server:
-  port: 8080
-
   datasource:
-    url: jdbc:postgresql://db:5432/music
+    url: jdbc:postgresql://postgres:5432/music
     username: music
     password: music
+
   jpa:
     hibernate:
       ddl-auto: validate
+    open-in-view: false
+
   flyway:
     enabled: true
+
+server:
+  port: 8080
 
 minio:
   url: http://minio:9000
   access-key: minio
   secret-key: minio123
+  bucket: albums
 
 management:
   endpoints:
